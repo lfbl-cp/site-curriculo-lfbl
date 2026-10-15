@@ -6,7 +6,7 @@
 <meta property="og:title" content="Luiz Felipe Bezerra Lopes">
 <meta property="og:description" content="Ciência política e análise de dados eleitorais. Projetos, publicações e experiência.">
 <meta property="og:type" content="profile">
-<meta property="og:image" content="https://lfbl-cp.github.io/site-curriculo-lfbl/foto.jpg">
+<meta property="og:image" content="https://lfbl-cp.github.io/site-curriculo-lfbl/retrato.jpg">
 <style>body{margin:0}</style>
 <title>Felipe Lopes</title>
 <meta name="description" content="Luiz Felipe Bezerra Lopes — mestrando em Ciência Política (UFPE), análise de dados eleitorais e pesquisa de opinião.">
@@ -65,18 +65,19 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outlin
 /* ---------- Cabeçalho ---------- */
 header {
   display: grid;
-  grid-template-columns: 180px minmax(0, 1fr);
+  grid-template-columns: var(--photo-w, 210px) minmax(0, 1fr);
   gap: 28px 40px;
   padding-bottom: 56px;
   border-bottom: 1px solid var(--line);
 }
 header > :not(.portrait) { grid-column: 2; }
 header > .figures, header > nav.toc { grid-column: 1 / -1; }
+.intro { display: grid; gap: 28px; }
+/* A altura da foto acompanha o bloco nome + descrição; a largura sai da proporção original (968 × 1254). */
 .portrait {
   grid-column: 1;
-  grid-row: 1 / span 3;
-  width: 100%;
-  max-width: 180px;
+  grid-row: 1;
+  width: var(--photo-w, 210px);
   height: auto;
   aspect-ratio: 968 / 1254;
   border-radius: 6px;
@@ -189,7 +190,7 @@ footer { padding-top: 40px; display: flex; flex-wrap: wrap; justify-content: spa
 @media (max-width: 720px) {
   header { grid-template-columns: minmax(0, 1fr); gap: 24px; }
   header > .portrait, header > :not(.portrait) { grid-column: 1 / -1; }
-  .portrait { grid-row: auto; max-width: 120px; }
+  .portrait { grid-row: auto; width: 120px; }
   section { grid-template-columns: minmax(0, 1fr); gap: 20px; padding-block: 40px; }
   .figures { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 18px; }
   dl.skills { grid-template-columns: minmax(0, 1fr); gap: 2px; }
@@ -204,13 +205,15 @@ footer { padding-top: 40px; display: flex; flex-wrap: wrap; justify-content: spa
 <body>
 <div class="wrap">
   <header>
-    <img class="portrait" src="foto.jpg" alt="Foto de Luiz Felipe Bezerra Lopes" width="180" height="233">
+    <img class="portrait" id="portrait" src="retrato.jpg" alt="Foto de Luiz Felipe Bezerra Lopes" width="210" height="272">
+    <div class="intro" id="intro">
     <div>
       <h1 class="name">Luiz Felipe Bezerra Lopes</h1>
       <p class="role">Ciência política e análise de dados eleitorais · Recife, PE</p>
     </div>
 
     <p class="bio">Mestrando em Ciência Política na UFPE. Trabalho com dados eleitorais em todas as etapas da pesquisa: da aplicação de questionários em campo à agregação de pesquisas, à estatística espacial e a painéis interativos em R. Nas eleições de 2026, desenvolvi produtos de inteligência eleitoral para a consultoria Gauss Analítica e um agregador de pesquisas para o Senado na Paraíba.</p>
+    </div>
 
     <div class="contact">
       <span class="email"><span id="email">felipe_lopes40@outlook.com</span><button class="copy" id="copy-email" type="button">Copiar</button></span>
@@ -437,6 +440,26 @@ footer { padding-top: 40px; display: flex; flex-wrap: wrap; justify-content: spa
     } catch (e) { selectIt(); }
     setTimeout(function () { btn.textContent = 'Copiar'; }, 1800);
   });
+})();
+
+// Ajusta a largura da foto para que a altura dela vá do topo do nome ao fim da descrição.
+(function () {
+  var header = document.querySelector('header');
+  var intro = document.getElementById('intro');
+  var wide = window.matchMedia('(min-width: 721px)');
+  var RATIO = 968 / 1254;
+  function fit() {
+    if (!wide.matches) { header.style.removeProperty('--photo-w'); return; }
+    for (var k = 0; k < 4; k++) {
+      var w = Math.round(intro.getBoundingClientRect().height * RATIO);
+      var cur = parseFloat(header.style.getPropertyValue('--photo-w')) || 0;
+      if (Math.abs(w - cur) < 1) break;
+      header.style.setProperty('--photo-w', w + 'px');
+    }
+  }
+  fit();
+  window.addEventListener('resize', fit);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
 })();
 </script>
 </body>
