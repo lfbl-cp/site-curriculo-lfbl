@@ -6,7 +6,7 @@
 <meta property="og:title" content="Luiz Felipe Bezerra Lopes">
 <meta property="og:description" content="Ciência política e análise de dados eleitorais. Projetos, publicações e experiência.">
 <meta property="og:type" content="profile">
-<meta property="og:image" content="https://lfbl-cp.github.io/site-curriculo-lfbl/retrato.jpg">
+<meta property="og:image" content="https://lfbl-cp.github.io/site-curriculo-lfbl/perfil.jpg">
 <style>body{margin:0}</style>
 <title>Felipe Lopes</title>
 <meta name="description" content="Luiz Felipe Bezerra Lopes — mestrando em Ciência Política (UFPE), análise de dados eleitorais e pesquisa de opinião.">
@@ -73,13 +73,13 @@ header {
 header > :not(.portrait) { grid-column: 2; }
 header > .figures, header > nav.toc { grid-column: 1 / -1; }
 .intro { display: grid; gap: 28px; }
-/* A altura da foto acompanha o bloco nome + descrição; a largura sai da proporção original (968 × 1254). */
+/* A altura da foto acompanha o bloco nome + descrição; a largura sai da proporção original da foto (quadrada). */
 .portrait {
   grid-column: 1;
   grid-row: 1;
   width: var(--photo-w, 210px);
   height: auto;
-  aspect-ratio: 968 / 1254;
+  aspect-ratio: 1 / 1;
   border-radius: 6px;
   background: var(--line);
 }
@@ -205,7 +205,7 @@ footer { padding-top: 40px; display: flex; flex-wrap: wrap; justify-content: spa
 <body>
 <div class="wrap">
   <header>
-    <img class="portrait" id="portrait" src="retrato.jpg" alt="Foto de Luiz Felipe Bezerra Lopes" width="210" height="272">
+    <img class="portrait" id="portrait" src="perfil.jpg" alt="Foto de Luiz Felipe Bezerra Lopes" width="280" height="280">
     <div class="intro" id="intro">
     <div>
       <h1 class="name">Luiz Felipe Bezerra Lopes</h1>
@@ -447,15 +447,23 @@ footer { padding-top: 40px; display: flex; flex-wrap: wrap; justify-content: spa
   var header = document.querySelector('header');
   var intro = document.getElementById('intro');
   var wide = window.matchMedia('(min-width: 721px)');
-  var RATIO = 968 / 1254;
+  var RATIO = 1;
+  // Uma foto maior estreita o texto e o deixa mais alto; procura o tamanho em que a altura
+  // da foto iguala a do texto, limitado a 42% do cabeçalho (e 400 px).
+  function setW(w) {
+    header.style.setProperty('--photo-w', Math.round(w) + 'px');
+    return intro.getBoundingClientRect().height;
+  }
   function fit() {
     if (!wide.matches) { header.style.removeProperty('--photo-w'); return; }
-    for (var k = 0; k < 4; k++) {
-      var w = Math.round(intro.getBoundingClientRect().height * RATIO);
-      var cur = parseFloat(header.style.getPropertyValue('--photo-w')) || 0;
-      if (Math.abs(w - cur) < 1) break;
-      header.style.setProperty('--photo-w', w + 'px');
+    var maxW = Math.min(400, header.getBoundingClientRect().width * 0.42);
+    var lo = 140, hi = maxW;
+    if (setW(hi) * RATIO >= hi) return;
+    for (var k = 0; k < 14 && hi - lo > 1; k++) {
+      var mid = (lo + hi) / 2;
+      if (setW(mid) * RATIO > mid) lo = mid; else hi = mid;
     }
+    setW(hi);
   }
   fit();
   window.addEventListener('resize', fit);
