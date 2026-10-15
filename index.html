@@ -72,15 +72,17 @@ header {
 }
 header > :not(.portrait) { grid-column: 2; }
 header > .figures, header > nav.toc { grid-column: 1 / -1; }
-.intro { display: grid; gap: 28px; }
-/* A altura da foto acompanha o bloco nome + descrição; a largura sai da proporção original da foto (quadrada). */
+.intro { display: grid; gap: 28px; align-self: start; }
+/* Foto em oval (proporção 4:5); a altura acompanha o bloco nome + descrição. */
 .portrait {
   grid-column: 1;
   grid-row: 1;
   width: var(--photo-w, 210px);
   height: auto;
-  aspect-ratio: 1 / 1;
-  border-radius: 6px;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  object-position: 46% 50%;
+  border-radius: 50%;
   background: var(--line);
 }
 .name {
@@ -205,7 +207,7 @@ footer { padding-top: 40px; display: flex; flex-wrap: wrap; justify-content: spa
 <body>
 <div class="wrap">
   <header>
-    <img class="portrait" id="portrait" src="perfil.jpg" alt="Foto de Luiz Felipe Bezerra Lopes" width="280" height="280">
+    <img class="portrait" id="portrait" src="perfil.jpg" alt="Foto de Luiz Felipe Bezerra Lopes" width="224" height="280">
     <div class="intro" id="intro">
     <div>
       <h1 class="name">Luiz Felipe Bezerra Lopes</h1>
@@ -447,16 +449,16 @@ footer { padding-top: 40px; display: flex; flex-wrap: wrap; justify-content: spa
   var header = document.querySelector('header');
   var intro = document.getElementById('intro');
   var wide = window.matchMedia('(min-width: 721px)');
-  var RATIO = 1;
+  var RATIO = 4 / 5;
   // Uma foto maior estreita o texto e o deixa mais alto; procura o tamanho em que a altura
-  // da foto iguala a do texto, limitado a 42% do cabeçalho (e 400 px).
+  // da foto iguala a do texto, limitado a 30% do cabeçalho (e 280 px).
   function setW(w) {
     header.style.setProperty('--photo-w', Math.round(w) + 'px');
     return intro.getBoundingClientRect().height;
   }
   function fit() {
     if (!wide.matches) { header.style.removeProperty('--photo-w'); return; }
-    var maxW = Math.min(400, header.getBoundingClientRect().width * 0.42);
+    var maxW = Math.min(280, header.getBoundingClientRect().width * 0.30);
     var lo = 140, hi = maxW;
     if (setW(hi) * RATIO >= hi) return;
     for (var k = 0; k < 14 && hi - lo > 1; k++) {
