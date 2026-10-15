@@ -1,0 +1,420 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta property="og:title" content="Luiz Felipe Bezerra Lopes">
+<meta property="og:description" content="Ciência política e análise de dados eleitorais. Projetos, publicações e experiência.">
+<meta property="og:type" content="profile">
+<style>body{margin:0}</style>
+<title>Felipe Lopes</title>
+<meta name="description" content="Luiz Felipe Bezerra Lopes — mestrando em Ciência Política (UFPE), análise de dados eleitorais e pesquisa de opinião.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: coluna única de leitura; em telas largas, rótulo da seção numa coluna estreita à esquerda e conteúdo à direita */
+:root {
+  --bg: #f6f7f9;
+  --fg: #14171d;
+  --muted: #5c6472;
+  --faint: #8a919d;
+  --line: #e2e5ea;
+  --accent: #1a56a6;
+  --accent-soft: #e6eef9;
+  --sans: "Geist", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --mono: "Geist Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+  --step--1: 0.8125rem;
+  --step-0: 1rem;
+  --step-1: 1.125rem;
+  --step-4: clamp(2.25rem, 1.4rem + 3.6vw, 3.5rem);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f1216; --fg: #e7eaef; --muted: #a0a8b5; --faint: #79818e;
+    --line: #252a32; --accent: #86adec; --accent-soft: #18233a; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0f1216; --fg: #e7eaef; --muted: #a0a8b5; --faint: #79818e;
+  --line: #252a32; --accent: #86adec; --accent-soft: #18233a; color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--sans);
+  font-size: var(--step-0);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+.wrap {
+  max-width: 980px;
+  margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: clamp(48px, 9vw, 112px) 64px;
+}
+a { color: var(--accent); text-decoration: none; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+a:hover { text-decoration: underline; }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+.mono { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+
+/* ---------- Cabeçalho ---------- */
+header { display: grid; gap: 28px; padding-bottom: 56px; border-bottom: 1px solid var(--line); }
+.name {
+  margin: 0;
+  font-size: var(--step-4);
+  font-weight: 500;
+  letter-spacing: -0.035em;
+  line-height: 1.02;
+  text-wrap: balance;
+}
+.role { margin: 10px 0 0; color: var(--muted); font-size: var(--step-1); }
+.bio { margin: 0; max-width: 62ch; font-size: var(--step-1); line-height: 1.65; }
+.contact { display: flex; flex-wrap: wrap; gap: 10px 24px; align-items: center; font-size: 0.9375rem; }
+.email { display: inline-flex; align-items: center; gap: 8px; }
+.email span { font-family: var(--mono); font-size: 0.875rem; color: var(--fg); }
+.copy {
+  font: 500 var(--step--1)/1 var(--sans);
+  color: var(--muted);
+  background: none;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+.copy:hover { color: var(--fg); border-color: var(--faint); }
+
+.figures {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--line);
+  padding-top: 20px;
+}
+.figures li { display: grid; gap: 2px; padding-right: 16px; }
+.figures b { font-family: var(--mono); font-weight: 500; font-size: 1.5rem; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+.figures span { color: var(--muted); font-size: var(--step--1); line-height: 1.4; }
+
+nav.toc { display: flex; flex-wrap: wrap; gap: 6px 20px; font-size: var(--step--1); color: var(--muted); }
+nav.toc a { color: var(--muted); }
+nav.toc a:hover { color: var(--fg); }
+
+/* ---------- Seções ---------- */
+section {
+  display: grid;
+  grid-template-columns: 180px minmax(0, 1fr);
+  gap: 24px 40px;
+  padding-block: 48px;
+  border-bottom: 1px solid var(--line);
+}
+section:last-of-type { border-bottom: 0; }
+h2 {
+  margin: 0;
+  font-size: var(--step--1);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  padding-top: 4px;
+}
+.stack { display: grid; gap: 36px; min-width: 0; }
+.stack.tight { gap: 22px; }
+
+.item { display: grid; gap: 6px; }
+.item-head { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 2px 16px; align-items: baseline; }
+h3 { margin: 0; font-size: var(--step-1); font-weight: 600; letter-spacing: -0.01em; line-height: 1.35; text-wrap: balance; }
+h3 .org { font-weight: 400; color: var(--muted); }
+.when { font-family: var(--mono); font-size: var(--step--1); color: var(--faint); white-space: nowrap; font-variant-numeric: tabular-nums; }
+.context { margin: 0; color: var(--muted); font-size: 0.9375rem; }
+ul.points { margin: 6px 0 0; padding: 0; list-style: none; display: grid; gap: 6px; }
+ul.points li { position: relative; padding-left: 18px; color: var(--fg); }
+ul.points li::before { content: ""; position: absolute; left: 2px; top: 0.72em; width: 6px; height: 1px; background: var(--faint); }
+
+/* Projetos */
+.projects { display: grid; gap: 0; }
+.project { display: grid; gap: 6px; padding-block: 18px; border-top: 1px solid var(--line); }
+.project:first-child { border-top: 0; padding-top: 0; }
+.project h3 a { color: var(--fg); }
+.project h3 a:hover { color: var(--accent); text-decoration: none; }
+.project h3 a::after { content: " ↗"; color: var(--faint); font-weight: 400; }
+.project p { margin: 0; color: var(--muted); max-width: 68ch; }
+.tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+.tag { font-family: var(--mono); font-size: 0.75rem; color: var(--muted); background: var(--accent-soft); border-radius: 4px; padding: 2px 7px; }
+.note { font-size: var(--step--1); color: var(--faint); }
+.note a { color: var(--muted); text-decoration: underline; }
+
+/* Publicações */
+.group { display: grid; gap: 14px; }
+.group-label { margin: 0; font-size: var(--step--1); color: var(--faint); font-family: var(--mono); }
+.pubs { margin: 0; padding: 0; list-style: none; display: grid; gap: 16px; }
+.pub { display: grid; gap: 2px; }
+.pub a.title { color: var(--fg); font-weight: 500; }
+.pub a.title:hover { color: var(--accent); text-decoration: none; }
+.pub a.title::after { content: " ↗"; color: var(--faint); font-weight: 400; }
+.pub .title.plain { font-weight: 500; }
+.pub .meta { color: var(--muted); font-size: 0.9375rem; }
+
+/* Competências */
+dl.skills { margin: 0; display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 14px 24px; }
+dl.skills dt { color: var(--muted); font-size: 0.9375rem; }
+dl.skills dd { margin: 0; }
+
+footer { padding-top: 40px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; font-size: var(--step--1); color: var(--faint); }
+
+@media (max-width: 720px) {
+  section { grid-template-columns: minmax(0, 1fr); gap: 20px; padding-block: 40px; }
+  .figures { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 18px; }
+  dl.skills { grid-template-columns: minmax(0, 1fr); gap: 2px; }
+  dl.skills dd { margin-bottom: 12px; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  a, .copy { transition: color .15s ease, border-color .15s ease; }
+}
+</style>
+
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <h1 class="name">Luiz Felipe Bezerra Lopes</h1>
+      <p class="role">Ciência política e análise de dados eleitorais · Recife, PE</p>
+    </div>
+
+    <p class="bio">Mestrando em Ciência Política na UFPE. Trabalho com dados eleitorais em todas as etapas da pesquisa: da aplicação de questionários em campo à agregação de pesquisas, à estatística espacial e a painéis interativos em R. Nas eleições de 2026, desenvolvi produtos de inteligência eleitoral para a consultoria Gauss Analítica e um agregador de pesquisas para o Senado na Paraíba.</p>
+
+    <div class="contact">
+      <span class="email"><span id="email">felipe_lopes40@outlook.com</span><button class="copy" id="copy-email" type="button">Copiar</button></span>
+      <a href="https://www.linkedin.com/in/felipe-lopes-052963345">LinkedIn</a>
+      <a href="https://github.com/lfbl-cp">GitHub</a>
+      <a href="http://lattes.cnpq.br/1559825140740306">Lattes</a>
+    </div>
+
+    <ul class="figures" aria-label="Alguns números do trabalho">
+      <li><b>42</b><span>pesquisas agregadas para o Senado em PE</span></li>
+      <li><b>35</b><span>pesquisas no modelo do Senado na PB</span></li>
+      <li><b>16 mil</b><span>comentários classificados no Instagram</span></li>
+      <li><b>5.570</b><span>municípios na análise espacial do voto</span></li>
+    </ul>
+
+    <nav class="toc" aria-label="Seções">
+      <a href="#experiencia">Experiência</a>
+      <a href="#projetos">Projetos</a>
+      <a href="#publicacoes">Publicações e imprensa</a>
+      <a href="#formacao">Formação</a>
+      <a href="#competencias">Competências</a>
+    </nav>
+  </header>
+
+  <main>
+    <section id="experiencia">
+      <h2>Experiência</h2>
+      <div class="stack">
+        <article class="item">
+          <div class="item-head">
+            <h3>Analista de Dados <span class="org">· Gauss Analítica</span></h3>
+            <span class="when">jun–out 2026</span>
+          </div>
+          <p class="context">Inteligência eleitoral para campanha majoritária ao Senado em Pernambuco (prestação de serviço)</p>
+          <ul class="points">
+            <li>Agregador de 42 pesquisas de 14 institutos, com pesos por recência, amostra, acerto histórico e impugnações, e correção do <i>house effect</i>.</li>
+            <li>Agentes de IA para raspagem e validação de pesquisas eleitorais a partir dos registros no TSE: 1.366 linhas conferidas.</li>
+            <li>Diagnóstico pós-1º turno de 185 municípios e 94 bairros do Recife: tipologia, LISA e apoio de prefeitos.</li>
+            <li>Monitoramento de redes e análise de 16 mil comentários no Instagram, com regras, léxico de sentimento (OpLexicon) e revisão manual.</li>
+            <li>Base de 379 indicadores municipais, painéis temáticos e cards de dados para 33 eventos de agenda e debates.</li>
+          </ul>
+        </article>
+
+        <article class="item">
+          <div class="item-head">
+            <h3>Analista de Dados <span class="org">· Fade-UFPE</span></h3>
+            <span class="when">fev–set 2026</span>
+          </div>
+          <p class="context">Projeto Periferia Viva: Urbanização da Comunidade do Aratu, Recife</p>
+          <ul class="points">
+            <li>Tratamento e análise em R de survey sobre as condições de habitação da comunidade (avaliação ex-ante).</li>
+            <li>Relatórios técnicos com visualizações, como o “Levantamento de criticidades habitacionais” (2026, coautoria).</li>
+          </ul>
+        </article>
+
+        <article class="item">
+          <div class="item-head">
+            <h3>Pesquisador de Campo <span class="org">· FIPE – Fundação Instituto de Pesquisas Econômicas</span></h3>
+            <span class="when">mai 2022 – fev 2026</span>
+          </div>
+          <ul class="points">
+            <li>Aplicação de questionários estruturados (survey) em pesquisas de campo em Campina Grande (PB).</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section id="projetos">
+      <h2>Projetos</h2>
+      <div class="projects">
+        <div class="project">
+          <h3><a href="https://jornaldaparaiba.com.br/politica/conversa-politica/senado-paraiba-agregador-aponta-disputa-acirrada-veneziano-nabor">Agregador de pesquisas · Senado PB 2026</a></h3>
+          <p>Raspagem e dupla conferência de 35 pesquisas registradas no TSE, correção do viés de cada instituto e 200 mil simulações da probabilidade de eleição.</p>
+          <div class="tags"><span class="tag">R</span><span class="tag">regressão local</span><span class="tag">simulação</span></div>
+          <span class="note">Repercutido pelo Jornal da Paraíba</span>
+        </div>
+        <div class="project">
+          <h3><a href="https://lfbl-cp.github.io/Evidencias-em-planos-de-governo-2026/">Evidências nos planos de governo 2026</a></h3>
+          <p>Índice aplicado aos planos de 60 candidatos a governador nas 27 UFs, com painéis por região. Só 4,1% das promessas têm base verificável.</p>
+          <div class="tags"><span class="tag">análise de texto</span><span class="tag">Python</span><span class="tag">em parceria</span></div>
+          <span class="note">Publicado no JOTA com Felipe Rodrigues Braga</span>
+        </div>
+        <div class="project">
+          <h3><a href="https://lfbl-cp.github.io/painel-eleicoes-2026/">Painel Eleições</a></h3>
+          <p>Resultados por município para presidente e senador nas 27 UFs, com mapas e clusters espaciais (LISA).</p>
+          <div class="tags"><span class="tag">R</span><span class="tag">mapas</span><span class="tag">LISA</span></div>
+        </div>
+        <div class="project">
+          <h3><a href="https://lfbl-cp.github.io/dashboard-legislativo-2026/frontend/">Painel Legislativo 2026</a></h3>
+          <p>Mapa e composição das bancadas eleitas para Câmara, Senado e Assembleias, por UF e município.</p>
+          <div class="tags"><span class="tag">R</span><span class="tag">mapas</span></div>
+        </div>
+        <div class="project">
+          <h3><a href="https://github.com/lfbl-cp/autocorelacao-espacial-eleicoes-brasil">Voto Lula × PT no território</a></h3>
+          <p>I de Moran, LISA e Moran bivariado nos 5.570 municípios brasileiros, nas eleições de 2002, 2006 e 2022.</p>
+          <div class="tags"><span class="tag">R</span><span class="tag">spdep</span><span class="tag">geobr</span></div>
+        </div>
+        <div class="project">
+          <h3><a href="https://3krw2q-felipe-lopes.shinyapps.io/Dashboard_Novo/">Painel NOVO-PE</a></h3>
+          <p>Desempenho eleitoral do partido em Pernambuco por município e por bairro, com perfis de candidatos obtidos na API do TSE.</p>
+          <div class="tags"><span class="tag">R</span><span class="tag">Shiny</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="publicacoes">
+      <h2>Publicações e imprensa</h2>
+      <div class="stack tight">
+        <div class="group">
+          <p class="group-label">Artigos de opinião</p>
+          <ul class="pubs">
+            <li class="pub">
+              <a class="title" href="https://periodicos.fgv.br/cgpc/announcement/view/523">Retórica ou evidência nos planos de governo</a>
+              <span class="meta">JOTA, coluna Gestão, Política &amp; Sociedade · <span class="mono">out 2026</span> · com Felipe Rodrigues Braga · também em <a href="https://www.jota.info/opiniao-e-analise/colunas/gestao-politica-sociedade/retorica-ou-evidencia-nos-planos-de-governo">jota.info</a></span>
+            </li>
+            <li class="pub">
+              <a class="title" href="https://jc.uol.com.br/opiniao/artigo/2026/08/13/a-corrida-pelo-senado-em-pernambuco.html">A corrida pelo Senado em Pernambuco</a>
+              <span class="meta">Jornal do Commercio, Opinião · <span class="mono">13 ago 2026</span> · com Arthur Santos Lira</span>
+            </li>
+            <li class="pub">
+              <a class="title" href="https://blogoxentebrasil.com.br/a-eleicao-na-paraiba-para-os-desavisados/">A eleição na Paraíba para os “desavisados”</a>
+              <span class="meta">Blog Oxente Brasil · <span class="mono">23 jan 2026</span></span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="group">
+          <p class="group-label">Na imprensa</p>
+          <ul class="pubs">
+            <li class="pub">
+              <a class="title" href="https://jornaldaparaiba.com.br/politica/conversa-politica/senado-paraiba-agregador-aponta-disputa-acirrada-veneziano-nabor">Senado na Paraíba: agregador aponta disputa acirrada entre Veneziano e Nabor pelo segundo voto</a>
+              <span class="meta">Jornal da Paraíba, Conversa Política · <span class="mono">1 out 2026</span> · reportagem sobre o agregador</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="group">
+          <p class="group-label">Artigo acadêmico</p>
+          <ul class="pubs">
+            <li class="pub">
+              <span class="title plain">Representação política e regime de insurgência</span>
+              <span class="meta">Revista NEP (UFPR), v. 10 · <span class="mono">2024</span> · com J. M. Monteiro</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="formacao">
+      <h2>Formação</h2>
+      <div class="stack tight">
+        <article class="item">
+          <div class="item-head">
+            <h3>Mestrado em Ciência Política <span class="org">· UFPE</span></h3>
+            <span class="when">2026–2028</span>
+          </div>
+          <p class="context">Dissertação sobre padrões espaciais do voto partidário para a Câmara dos Deputados (2014–2022). Em andamento.</p>
+        </article>
+        <article class="item">
+          <div class="item-head">
+            <h3>Especialização em Análise de Dados e IA <span class="org">· CESAR School</span></h3>
+            <span class="when">2026–2027</span>
+          </div>
+          <p class="context">Em andamento.</p>
+        </article>
+        <article class="item">
+          <div class="item-head">
+            <h3>Bacharelado em Ciências Sociais <span class="org">· UFCG</span></h3>
+            <span class="when">2021–2026</span>
+          </div>
+          <p class="context">TCC: Voto, território e raça nas eleições municipais: análise espacial da trajetória eleitoral de Jô Oliveira (2016–2024). Recebeu Moção de Aplausos da Câmara Municipal de Campina Grande (2026).</p>
+        </article>
+        <div class="group">
+          <p class="group-label">Cursos complementares</p>
+          <ul class="points">
+            <li>Introdução à Ciência de Dados · FGV <span class="mono note">60h</span></li>
+            <li>Ciência de Dados Aplicada a Pequenos Negócios · UFPE <span class="mono note">96h</span></li>
+            <li>Análise de Dados para Ciências Sociais em Python · UFCG <span class="mono note">60h</span></li>
+            <li>Descomplica GEO-R · Clube do GIS <span class="mono note">60h</span></li>
+            <li>Monitoramento e Avaliação de Políticas Públicas · FGV <span class="mono note">24h</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="competencias">
+      <h2>Competências</h2>
+      <dl class="skills">
+        <dt>Ferramentas</dt>
+        <dd>R (tidyverse, sf, spdep, Shiny, Rmarkdown, leaflet), Python e SQL (básico), Excel, Git/GitHub</dd>
+        <dt>Métodos</dt>
+        <dd>Agregação de pesquisas eleitorais, survey, estatística espacial (Moran, LISA), análise de sentimento, visualização de dados</dd>
+        <dt>Dados</dt>
+        <dd>TSE, IBGE, DATASUS, INEP, APIs da Câmara e do Senado</dd>
+        <dt>IA</dt>
+        <dd>Claude Code com agentes de coleta e auditoria de dados</dd>
+        <dt>Idiomas</dt>
+        <dd>Português (nativo), inglês (intermediário, B1)</dd>
+        <dt>Eventos</dt>
+        <dd>3º Seminário Internacional ABRAPEL – Pesquisas eleitorais: desafios e metodologias (2024)</dd>
+      </dl>
+    </section>
+  </main>
+
+  <footer>
+    <span>Luiz Felipe Bezerra Lopes · Recife, PE</span>
+    <span class="mono">Atualizado em outubro de 2026</span>
+  </footer>
+</div>
+
+<script>
+(function () {
+  var btn = document.getElementById('copy-email');
+  var addr = document.getElementById('email');
+  btn.addEventListener('click', function () {
+    var text = addr.textContent;
+    function selectIt() {
+      var r = document.createRange(); r.selectNodeContents(addr);
+      var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+      btn.textContent = 'Selecionado';
+    }
+    try {
+      navigator.clipboard.writeText(text).then(function () { btn.textContent = 'Copiado'; }, selectIt);
+    } catch (e) { selectIt(); }
+    setTimeout(function () { btn.textContent = 'Copiar'; }, 1800);
+  });
+})();
+</script>
+</body>
+</html>
