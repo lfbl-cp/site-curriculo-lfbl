@@ -6,6 +6,7 @@
 <meta property="og:title" content="Luiz Felipe Bezerra Lopes">
 <meta property="og:description" content="Ciência política e análise de dados eleitorais. Projetos, publicações e experiência.">
 <meta property="og:type" content="profile">
+<meta property="og:image" content="https://lfbl-cp.github.io/site-curriculo-lfbl/foto.jpg">
 <style>body{margin:0}</style>
 <title>Felipe Lopes</title>
 <meta name="description" content="Luiz Felipe Bezerra Lopes — mestrando em Ciência Política (UFPE), análise de dados eleitorais e pesquisa de opinião.">
@@ -62,7 +63,27 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outlin
 .mono { font-family: var(--mono); font-variant-numeric: tabular-nums; }
 
 /* ---------- Cabeçalho ---------- */
-header { display: grid; gap: 28px; padding-bottom: 56px; border-bottom: 1px solid var(--line); }
+header {
+  display: grid;
+  grid-template-columns: 180px minmax(0, 1fr);
+  gap: 28px 40px;
+  padding-bottom: 56px;
+  border-bottom: 1px solid var(--line);
+}
+header > :not(.portrait) { grid-column: 2; }
+header > .figures, header > nav.toc { grid-column: 1 / -1; }
+.portrait {
+  grid-column: 1;
+  grid-row: 1 / span 3;
+  width: 100%;
+  max-width: 180px;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 6px;
+  background: var(--line);
+  filter: grayscale(1) contrast(1.04);
+}
 .name {
   margin: 0;
   font-size: var(--step-4);
@@ -168,6 +189,9 @@ dl.skills dd { margin: 0; }
 footer { padding-top: 40px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; font-size: var(--step--1); color: var(--faint); }
 
 @media (max-width: 720px) {
+  header { grid-template-columns: minmax(0, 1fr); gap: 24px; }
+  header > .portrait, header > :not(.portrait) { grid-column: 1 / -1; }
+  .portrait { grid-row: auto; max-width: 104px; }
   section { grid-template-columns: minmax(0, 1fr); gap: 20px; padding-block: 40px; }
   .figures { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 18px; }
   dl.skills { grid-template-columns: minmax(0, 1fr); gap: 2px; }
@@ -182,6 +206,7 @@ footer { padding-top: 40px; display: flex; flex-wrap: wrap; justify-content: spa
 <body>
 <div class="wrap">
   <header>
+    <img class="portrait" src="foto.jpg" alt="Foto de Luiz Felipe Bezerra Lopes" width="180" height="180">
     <div>
       <h1 class="name">Luiz Felipe Bezerra Lopes</h1>
       <p class="role">Ciência política e análise de dados eleitorais · Recife, PE</p>
